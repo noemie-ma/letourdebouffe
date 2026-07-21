@@ -1,0 +1,68 @@
+/* Réinitialisation de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body,
+.app-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+/* Style du panneau latéral */
+.sidebar {
+  width: 350px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Reste au-dessus de la carte */
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+/* Boutons de filtrage */
+.filters {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #34495e;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #1abc9c;
+}
+
+/* Boîte de détails */
+.details-box {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 5px solid #1abc9c;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Style de la carte à droite */
+#map {
+  flex: 1;
+  height: 100%;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Tour de la bouffe - Cyclotourisme</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Panneau à gauche -->
+        <aside class="sidebar">
+            <h1>Le Tour de la bouffe 🚴‍♂️</h1>
+            <p>Explorez les environs de l'étape du Tour de France.</p>
+
+            <!-- Filtres -->
+            <div class="filters">
+                <button onclick="filtrerPoints('tous')">Tout voir</button>
+                <button onclick="filtrerPoints('terroir')">🧀 Terroir</button>
+                <button onclick="filtrerPoints('spectateur')">📸 Points de vue</button>
+            </div>
+
+            <!-- Zone où s'afficheront les infos sur la carte -->
+            <div id="details-panel" class="details-box">
+                <h3>Sélectionnez un point sur la carte</h3>
+                <p>Cliquez sur un marqueur pour découvrir les producteurs locaux ou les meilleurs spots pour voir les
+                    coureurs.</p>
+            </div>
+        </aside>
+
+        <!-- Zone d'affichage de la carte -->
+        <main id="map"></main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
