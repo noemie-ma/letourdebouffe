@@ -4,49 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Tour de la bouffe - Cyclotourisme</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/icons/favicon.ico">
+    <title>Le Tour de la Bouffe</title>
 </head>
 
 <body>
 
-    <div class="app-container">
-        <!-- Panneau à gauche -->
-        <aside class="sidebar">
-            <h1>Le Tour de la bouffe 🚴‍♂️</h1>
-            <p>Explorez les environs de l'étape du Tour de France.</p>
+    <div id="app">
 
-            <!-- Filtres -->
-            <div class="filters" style="display: flex; flex-direction: column; gap: 10px;">
-                <div>
-                    <label for="select-annee">Année :</label>
-                    <select id="select-annee" onchange="mettreAJourAffichage()"></select>
-                </div>
-                <div style="display: flex; gap: 10px;">
-                    <button id="btn-hommes" onclick="changerGenre('hommes')" style="background-color: #1abc9c;">♂️ Tour
-                        Hommes</button>
-                    <button id="btn-femmes" onclick="changerGenre('femmes')">♀️ Tour Femmes</button>
-                </div>
+        <aside id="sidebar">
+
+            <h1>🚴 Le Tour de la Bouffe</h1>
+
+            <p>
+                Découvrez le Tour de France autrement.
+            </p>
+
+            <hr>
+
+            <div id="menu">
+
+                <h2>Chargement...</h2>
+
             </div>
 
-            <!-- Zone où s'afficheront les infos sur la carte -->
-            <div id="details-panel" class="details-box">
-                <h3>Sélectionnez un point sur la carte</h3>
-                <p>Cliquez sur un marqueur pour découvrir les producteurs locaux ou les meilleurs spots pour voir les
-                    coureurs.</p>
-            </div>
         </aside>
 
-        <!-- Zone d'affichage de la carte -->
         <main id="map"></main>
+
     </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="scripts.js"></script>
+    <!-- Scripts-->
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script type="module" src="js/app.js"></script>
 
 </body>
 

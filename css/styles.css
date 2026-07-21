@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+#sidebar {
+  width: 360px;
+
+  background: #111;
+
+  color: white;
+
+  padding: 30px;
+
+  overflow: auto;
+}
+
+#sidebar h1 {
+  color: #ffd100;
+
+  margin-bottom: 15px;
+}
+
+#sidebar p {
+  color: #cccccc;
+
+  margin-bottom: 20px;
+}
+
+#map {
+  flex: 1;
+}
