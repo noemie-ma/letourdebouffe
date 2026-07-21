@@ -18,10 +18,16 @@
             <p>Explorez les environs de l'étape du Tour de France.</p>
 
             <!-- Filtres -->
-            <div class="filters">
-                <button onclick="filtrerPoints('tous')">Tout voir</button>
-                <button onclick="filtrerPoints('terroir')">🧀 Terroir</button>
-                <button onclick="filtrerPoints('spectateur')">📸 Points de vue</button>
+            <div class="filters" style="display: flex; flex-direction: column; gap: 10px;">
+                <div>
+                    <label for="select-annee">Année :</label>
+                    <select id="select-annee" onchange="mettreAJourAffichage()"></select>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button id="btn-hommes" onclick="changerGenre('hommes')" style="background-color: #1abc9c;">♂️ Tour
+                        Hommes</button>
+                    <button id="btn-femmes" onclick="changerGenre('femmes')">♀️ Tour Femmes</button>
+                </div>
             </div>
 
             <!-- Zone où s'afficheront les infos sur la carte -->
