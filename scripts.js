@@ -1,12 +1,85 @@
-// 1. Initialisation de la carte (Centrée par défaut près de La Rochelle)
-const map = L.map("map").setView([46.16, -1.15], 11);
+const map = L.map("map").setView([46.2276, 2.2137], 6);
 
-// 2. Chargement des tuiles de la carte (OpenStreetMap)
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap contributors",
 }).addTo(map);
 
-// 3. Notre base de données locale (Données fictives de démonstration)
+const URL_TOUR_HOMMES =
+  "https://raw.githubusercontent.com/thomascamminady/LeTourDataSet/master/data/men/TDF_Stages_History.csv";
+const URL_TOUR_FEMMES =
+  "https://raw.githubusercontent.com/thomascamminady/LeTourDataSet/master/data/women/TDFF_Stages_History.csv";
+
+let etapesHommes = [];
+let etapesFemmes = [];
+
+async function chargerDonneesHistoriques() {
+  try {
+    console.log("Téléchargement des données du Tour en cours...");
+
+    const [reponseHommes, reponseFemmes] = await Promise.all([
+      fetch(URL_TOUR_HOMMES),
+      fetch(URL_TOUR_FEMMES),
+    ]);
+
+    const texteHommes = await reponseHommes.text();
+    const texteFemmes = await reponseFemmes.text();
+
+    const donneesBrutesHommes = Papa.parse(texteHommes, {
+      header: true,
+      skipEmptyLines: true,
+    }).data;
+    const donneesBrutesFemmes = Papa.parse(texteFemmes, {
+      header: true,
+      skipEmptyLines: true,
+    }).data;
+
+    etapesHommes = donneesBrutesHommes.filter((etape) => {
+      const annee = parseInt(etape.Year || etape.year);
+      return annee >= 2000 && annee <= 2026;
+    });
+
+    etapesFemmes = donneesBrutesFemmes.filter((etape) => {
+      const annee = parseInt(etape.Year || etape.year);
+      return annee >= 2000 && annee <= 2026;
+    });
+
+    console.log(
+      `✅ Chargement réussi ! ${etapesHommes.length} étapes Hommes et ${etapesFemmes.length} étapes Femmes trouvées depuis 2000.`,
+    );
+
+    if (etapesHommes.length > 0) {
+      console.log("Exemple d'une étape structurée :", etapesHommes[0]);
+    }
+
+    intialiserInterface();
+  } catch (erreur) {
+    console.error(
+      "Erreur critique lors de la récupération des données :",
+      erreur,
+    );
+  }
+}
+
+function intialiserInterface() {
+  const panneau = document.getElementById("details-panel");
+  panneau.innerHTML = `
+        <h3>📊 Base de données connectée</h3>
+        <p style="margin-top: 10px;">Les données depuis l'an 2000 ont été téléchargées avec succès.</p>
+        <ul style="margin-top: 10px; padding-left: 20px;">
+            <li>Étapes Hommes : ${etapesHommes.length}</li>
+            <li>Étapes Femmes : ${etapesFemmes.length}</li>
+        </ul>
+        <p style="margin-top: 10px; color: #7f8c8d; font-size: 0.85rem;">Ouvrez la console de votre navigateur (F12) pour voir les objets de données complets !</p>
+    `;
+}
+
+chargerDonneesHistoriques();
+const map = L.map("map").setView([46.16, -1.15], 11);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "© OpenStreetMap contributors",
+}).addTo(map);
+
 const pointsInteret = [
   {
     id: 1,
@@ -34,25 +107,18 @@ const pointsInteret = [
   },
 ];
 
-// Tableau pour stocker les marqueurs affichés à l'écran
 let listeMarqueurs = [];
 
-// 4. Fonction pour afficher les marqueurs sur la carte
 function afficherPoints(categorieFiltre) {
-  // Supprimer les marqueurs existants pour nettoyer la carte
   listeMarqueurs.forEach((marker) => map.removeLayer(marker));
   listeMarqueurs = [];
 
-  // Filtrer et ajouter les marqueurs correspondants
   pointsInteret.forEach((point) => {
     if (categorieFiltre === "tous" || point.type === categorieFiltre) {
-      // Créer le marqueur Leaflet
       const marker = L.marker(point.coords).addTo(map);
 
-      // Ajouter une bulle d'info simple au survol ou clic sur le marqueur
       marker.bindPopup(`<b>${point.nom}</b>`);
 
-      // Événement au clic : mettre à jour le panneau latéral gauche
       marker.on("click", () => {
         const panneau = document.getElementById("details-panel");
         panneau.innerHTML = `
@@ -62,16 +128,13 @@ function afficherPoints(categorieFiltre) {
                 `;
       });
 
-      // Conserver une trace du marqueur pour pouvoir le supprimer au prochain filtre
       listeMarqueurs.push(marker);
     }
   });
 }
 
-// 5. Fonction globale pour filtrer (appelée par les boutons HTML)
 function filtrerPoints(categorie) {
   afficherPoints(categorie);
 }
 
-// Initialisation : afficher tous les points au premier chargement de la page
 afficherPoints("tous");
